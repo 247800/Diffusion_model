@@ -6,8 +6,8 @@ import pandas as pd
 from torch.utils.data import Dataset, DataLoader
 
 class Audio_Dataset(Dataset):
-    def __init__(self, annotations, directory):
-        self.annotations = pd.read_csv(annotations)
+    def __init__(self, directory):
+        # self.annotations = pd.read_csv(annotations)
         self.directory = directory
 
     def __len__(self):
