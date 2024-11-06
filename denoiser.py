@@ -22,7 +22,3 @@ class Denoiser(nn.Module):
         x = self.encoder(x)
         x = self.decoder(x)
         return x
-
-# device = 'cuda' if torch.cuda.is_available() else 'cpu'
-# model = Denoiser().to(device)
-# print(model)
