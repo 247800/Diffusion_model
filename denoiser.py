@@ -7,7 +7,6 @@ class Denoiser(nn.Module):
         self.encoder = nn.Sequential(
             nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
-            # if we don't mind the original tensor getting overwritten, we may save some memory by setting: nn.ReLU(inplace=True)
             # nn.MaxPool2d((2,1))
         )
         # self.bottleneck = nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1)
@@ -20,7 +19,3 @@ class Denoiser(nn.Module):
         x = self.encoder(x)
         x = self.decoder(x)
         return x
-
-# device = 'cuda' if torch.cuda.is_available() else 'cpu'
-# model = Denoiser().to(device)
-# print(model)
