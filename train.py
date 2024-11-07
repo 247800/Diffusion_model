@@ -10,6 +10,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("using", device)
 
 path = "dataset"
+dataset = Audio_Dataset(path)
 model_train = Denoiser()
 
 loss_func = nn.MSELoss()
