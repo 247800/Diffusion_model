@@ -16,5 +16,6 @@ class Denoiser(nn.Module):
 
     def forward(self,x):
         x = self.encoder(x)
+        # x = self.bottleneck(x)
         x = self.decoder(x)
         return x
