@@ -18,8 +18,23 @@ loss_func = nn.MSELoss()
 learning_rate = 0.001
 optimizer = optim.Adam(model_train.parameters(), lr=learning_rate)
 
-def train_loop():
-    train_loss = 0
-    loss = loss_func()
-    train_loss += loss.item()
-    return train_loss / len(dataset)
+n_epochs = 5
+epoch = 0
+train_loss = []
+
+for epoch in range(n_epochs):
+    for index, input_sig in enumerate(dataset):
+        waveform, sample_rate = input_sig
+        noise = 10
+        corrupted_sig = waveform + noise * torch.randn(waveform.shape)
+
+        optimizer.zero_grad()
+        output = model_train(corrupted_sig)
+        loss = loss_func(output, input_sig).to(device)
+        loss.backward()
+        optimizer.step()
+        train_loss.append(loss.item())
+
+        print(f"Epoch: [{epoch+1}/{n_epochs}], Step: {index}, Loss: {loss}")
+        print("Loss device: {}", loss.device)
+        print(f"End of epoch {epoch}, accuracy {acc}")
