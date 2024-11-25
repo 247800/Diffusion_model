@@ -11,6 +11,7 @@ print("using", device)
 
 path = "dataset"
 dataset = AudioDataset(path)
+dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
 model_train = Denoiser()
 
 loss_func = nn.MSELoss()
@@ -23,14 +24,14 @@ epoch = 0
 train_loss = []
 
 for epoch in range(n_epochs):
-    for index, input_sig in enumerate(dataset):
+    for index, input_sig in enumerate(dataloader):
         waveform, sample_rate = input_sig
         noise = 10
         corrupted_sig = waveform + noise * torch.randn(waveform.shape)
 
         optimizer.zero_grad()
         output = model_train(corrupted_sig)
-        loss = loss_func(output, input_sig).to(device)
+        loss = loss_func(output, waveform).to(device)
         loss.backward()
         optimizer.step()
         train_loss.append(loss.item())
