@@ -8,12 +8,12 @@ from torch.utils.data import Dataset, DataLoader
 class AudioDataset(Dataset):
     def __init__(self, directory):
         # self.annotations = pd.read_csv(annotations)
-        self.directory = directory
+        self.directory = [os.path.join(directory, file) for file in os.listdir(directory) if file.endswith(".wav")]
 
     def __len__(self):
-        return len(self.annotations)
+        return len(self.directory)
 
     def __getitem__(self, index):
-        path = os.path.join(self.directory, self.annotations.iloc[index, 0])
+        path = self.directory[index]
         waveform, sample_rate = torchaudio.load(path)
         return waveform, sample_rate
