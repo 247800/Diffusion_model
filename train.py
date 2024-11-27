@@ -36,6 +36,6 @@ for epoch in range(n_epochs):
         optimizer.step()
         train_loss.append(loss.item())
 
-        print(f"Epoch: [{epoch+1}/{n_epochs}], Step: {index}, Loss: {loss}")
-        # print("Loss device: {}", loss.device)
+        print(f"Epoch: [{epoch+1}/{n_epochs}], Step: {index+1}, Loss: {loss}")
+        # print("Loss device:", loss.device)
         # print(f"End of epoch {epoch}, accuracy {acc}")
