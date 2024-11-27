@@ -5,12 +5,12 @@ class Denoiser(nn.Module):
     def __init__(self):
         super(Denoiser, self).__init__()
         self.encoder = nn.Sequential(
-            nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(2, 64, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
         )
         # self.bottleneck = nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1)
         self.decoder = nn.Sequential(
-            nn.ConvTranspose2d(64, 1, kernel_size=3, stride=1, padding=1),
+            nn.ConvTranspose2d(64, 2, kernel_size=3, stride=1, padding=1),
             # nn.ReLU()
         )
 
