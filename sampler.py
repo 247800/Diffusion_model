@@ -26,7 +26,8 @@ for step in range(n_steps):
     for index, input_sig in enumerate(dataloader):
         with torch.no_grad():
             waveform, sample_rate = input_sig
-
             noise = 10
             corrupted_sig = waveform + noise * torch.randn(waveform.shape)
+            denoised_sig = corrupted_sig.squeeze(0).squeeze(0)
+            sample = model(denoised_sig.unsqueeze(0).unsqueeze(0))
 
