@@ -9,10 +9,10 @@ from model import Denoiser
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("using", device)
 
-path = "dataset"
+path = "GTZAN_dataset"
 dataset = AudioDataset(path)
 dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
-model_train = Denoiser()
+model = Denoiser()
 
 loss_func = nn.MSELoss()
 
@@ -22,6 +22,8 @@ optimizer = optim.Adam(model_train.parameters(), lr=learning_rate)
 n_epochs = 5
 epoch = 0
 train_loss = []
+
+model.train()
 
 for epoch in range(n_epochs):
     for index, input_sig in enumerate(dataloader):
