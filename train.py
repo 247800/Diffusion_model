@@ -41,3 +41,5 @@ for epoch in range(n_epochs):
         print(f"Epoch: [{epoch+1}/{n_epochs}], Step: {index+1}, Loss: {loss}")
         # print("Loss device:", loss.device)
         # print(f"End of epoch {epoch}, accuracy {acc}")
+
+torch.save(model, 'denoiser.pth')
