@@ -3,7 +3,7 @@ import torchaudio
 import torch.optim as optim
 from torch import nn
 from torch.utils.data import Dataset, DataLoader
-from data_load import AudioDataset
+from dataset import AudioDataset
 from model import Denoiser
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
