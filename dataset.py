@@ -28,6 +28,8 @@ class AudioDataset(Dataset):
 
     def load_segment(self, audio_file):
         audio, sr = torchaudio.load(audio_file, normalize=True)
+        # min max normalization to ensure the dynamic range is within the values of [-1, 1]:
+        # audio = (audio - audio.min()) / (audio.max() - audio.min()) * 2 - 1
         if sr != self.sr:
             raise ValueError(f"Expected sample rate of {self.sr} but got {sr}")
         if self.stereo:
