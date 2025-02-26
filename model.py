@@ -15,7 +15,9 @@ class Denoiser(nn.Module):
         )
 
     def forward(self,x):
+        x = torch.unsqueeze(x,2)
         x = self.encoder(x)
         x = self.bottleneck(x)
         x = self.decoder(x)
+        x = torch.squeeze(x,2)
         return x
