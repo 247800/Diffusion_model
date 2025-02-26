@@ -21,3 +21,12 @@ model = torch.load('denoiser.pth', weights_only=False)
 n_steps = 10
 
 model.eval()
+
+for step in range(n_steps):
+    for index, input_sig in enumerate(dataloader):
+        with torch.no_grad():
+            waveform, sample_rate = input_sig
+
+            noise = 10
+            corrupted_sig = waveform + noise * torch.randn(waveform.shape)
+
