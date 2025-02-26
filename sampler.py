@@ -8,7 +8,6 @@ from dataset import AudioDataset
 from model import Denoiser
 import torchvision.models as models
 
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("using", device)
 
