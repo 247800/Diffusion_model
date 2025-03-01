@@ -4,6 +4,7 @@ import torchaudio
 import numpy as np
 import pandas as pd
 from torch.utils.data import Dataset, DataLoader
+from torch import nn
 
 class AudioDataset(Dataset):
     def __init__(self, 
