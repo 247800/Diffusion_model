@@ -11,7 +11,8 @@ class AudioDataset(Dataset):
                  sr = 22050,
                  seg_len = 2144,
                  stereo = False,
-                 train=True
+                 train=True,
+                 ds_percent = 50
                  ):
         super(AudioDataset, self).__init__()
         self.sr = sr
@@ -21,6 +22,8 @@ class AudioDataset(Dataset):
         self.stereo = stereo
                      
         files = [os.path.join(directory, file) for file in os.listdir(directory) if file.endswith(".wav")]
+        ds_idx = int(len(files) * (ds_percent / 100))
+                     
         if self.train:
             self.files = files[:2]
         else:
@@ -55,7 +58,7 @@ class AudioDataset(Dataset):
         return self.load_segment(self.files[index])
 
 if __name__ == "__main__":
-    dataset = AudioDataset(directory="GTZAN_dataset", sr=22050, seg_len=262144)
+    dataset = AudioDataset(directory="./GTZAN_dataset/", sr=22050, seg_len=262144)
     dataset.print_params()
     dataloader = DataLoader(dataset, batch_size=4)
     print(next(iter(dataloader)).shape)
