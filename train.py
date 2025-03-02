@@ -5,6 +5,7 @@ from torch import nn
 from torch.utils.data import Dataset, DataLoader
 from dataset import AudioDataset
 from model import Denoiser
+import auraloss
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("using", device)
@@ -14,7 +15,8 @@ dataset = AudioDataset(path)
 dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
 model = Denoiser()
 
-loss_func = nn.MSELoss()
+# loss_func = nn.MSELoss()
+loss_func = auraloss.freq.MultiResolutionSTFTLoss()
 
 learning_rate = 0.001
 optimizer = optim.Adam(model_train.parameters(), lr=learning_rate)
@@ -42,4 +44,4 @@ for epoch in range(n_epochs):
         # print("Loss device:", loss.device)
         # print(f"End of epoch {epoch}, accuracy {acc}")
 
-torch.save(model, 'denoiser.pth')
+torch.save(model.state_dict(), 'denoiser.pt')
