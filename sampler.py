@@ -12,9 +12,22 @@ import auraloss
 def get_time_schedule(sigma_min=1e-5, sigma_max=12, T=50, rho=10):
     i = torch.arange(0, T + 1)
     N = torch.randn(1)
-    sigma_i = (sigma_max ** (1/rho) + i * (sigma_min ** (1/rho) - sigma_max ** (1/rho)) / (N - 1)) ** rho
-    sigma_i[-1] = 0
+    sigma_i = (sigma_max ** (1/rho) + i * (sigma_min ** (1/rho) - sigma_max ** (1/rho)) / (T - 1)) ** rho
+    sigma_i[T] = 0
     return sigma_i
+
+def get_noise(t, S_tmin=1e-5, S_tmax=12, S_churn=None, idx=0):
+    if S_churn is None:
+        S_churn = t[idx:idx+1]
+        print('S_churn:', S_churn)
+    if S_churn < S_tmin:
+        gamma_i = 0
+    elif S_churn > S_tmax:
+        gamma_i = 0
+    else:
+        N = torch.randn(1)
+        gamma_i = min(S_churn/N, np.sqrt(1) - 1)
+    return gamma_i
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("using", device)
@@ -31,15 +44,17 @@ n_steps = 10
 
 S_noise = 1
 t_i = get_time_schedule()
+gamma = get_noise(t=t_i)
 
 model.eval()
 
 for step in range(n_steps):
     for index, input_sig in enumerate(dataloader):
         with torch.no_grad():
-            waveform, sample_rate = input_sig
-            noise = 10
-            corrupted_sig = waveform + noise * torch.randn(waveform.shape)
-            denoised_sig = corrupted_sig.squeeze(0).squeeze(0)
-            sample = model(denoised_sig.unsqueeze(0).unsqueeze(0))
+            x, _ = input_sig
+            x_0 = x + torch.randn(x.shape)
+            
+            # corrupted_sig = waveform + noise * torch.randn(waveform.shape)
+            # denoised_sig = corrupted_sig.squeeze(0).squeeze(0)
+            # sample = model(denoised_sig.unsqueeze(0).unsqueeze(0))
 
