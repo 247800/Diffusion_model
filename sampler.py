@@ -43,8 +43,8 @@ test_loss = []
 n_steps = 10
 
 S_noise = 1
-t_i = get_time_schedule()
-gamma = get_noise(t=t_i)
+t = get_time_schedule()
+gamma = get_noise(t=t)
 
 model.eval()
 
@@ -53,6 +53,9 @@ for step in range(n_steps):
         with torch.no_grad():
             x, _ = input_sig
             x_0 = x + torch.randn(x.shape)
+            
+            gamma = get_noise(t=t, idx=index)
+            t_i = t + t * gamma
             
             # corrupted_sig = waveform + noise * torch.randn(waveform.shape)
             # denoised_sig = corrupted_sig.squeeze(0).squeeze(0)
