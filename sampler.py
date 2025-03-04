@@ -19,7 +19,6 @@ def get_time_schedule(sigma_min=1e-5, sigma_max=12, T=50, rho=10):
 def get_noise(t, S_tmin=1e-5, S_tmax=12, S_churn=None, idx=0):
     if S_churn is None:
         S_churn = t[idx:idx+1]
-        print('S_churn:', S_churn)
     if S_churn < S_tmin:
         gamma_i = 0
     elif S_churn > S_tmax:
