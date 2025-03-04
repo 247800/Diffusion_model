@@ -44,7 +44,6 @@ n_steps = 10
 
 S_noise = 1
 t = get_time_schedule()
-gamma = get_noise(t=t)
 
 model.eval()
 
