@@ -61,3 +61,6 @@ for step in range(n_steps):
             # denoised_sig = corrupted_sig.squeeze(0).squeeze(0)
             # sample = model(denoised_sig.unsqueeze(0).unsqueeze(0))
 
+            # test_loss.append(loss.item())
+
+
