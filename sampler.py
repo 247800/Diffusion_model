@@ -53,7 +53,7 @@ for step in range(n_steps):
             x_0 = x + torch.randn(x.shape)
             
             gamma = get_noise(t=t, idx=index)
-            t_i = t + t * gamma
+            t_hat = t + t * gamma
             
             # corrupted_sig = waveform + noise * torch.randn(waveform.shape)
             # denoised_sig = corrupted_sig.squeeze(0).squeeze(0)
