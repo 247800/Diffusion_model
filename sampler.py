@@ -20,7 +20,7 @@ model = Denoiser()
 model.load_state_dict(torch.load('denoiser.pt', weights_only=True))
 
 loss_func = auraloss.freq.MultiResolutionSTFTLoss()
-test_loss = []
+# test_loss = []
 n_steps = 50
 
 S_noise = 1
