@@ -6,9 +6,9 @@ from torch import nn
 from torch.utils.data import Dataset, DataLoader
 from dataset import AudioDataset
 from model import Denoiser
+import utils.sampling_utils as s_utils
 import torchvision.models as models
 import auraloss
-import utils.sampling_utils as s_utils
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("using", device)
@@ -28,7 +28,8 @@ t = s_utils.get_time_schedule()
 
 model.eval()
 input_sig = next(iter(dataloader))
-x, _ = input_sig
+# x, _ = input_sig
+x = input_sig
 x_0 = x + torch.randn(x.shape)
 
 for step in range(n_steps):
@@ -36,7 +37,7 @@ for step in range(n_steps):
             gamma = s_utils.get_noise(t=t, idx=step)
             t_hat = t[step] + t[step] * gamma
             noise = torch.randn(x.shape)
-            x_hat = x + torch.sqrt(t_hat ** 2 - t[step] ** 2) * noise
+            x_hat = x + torch.sqrt(t_hat.clone().detach() ** 2 - t[step] ** 2) * noise
             D_theta = model(x_hat)
             d = (x_hat - D_theta) / t_hat
             x = x_hat + (t[step + 1] - t_hat) * d
