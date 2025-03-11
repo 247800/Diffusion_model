@@ -32,7 +32,6 @@ x, _ = input_sig
 x_0 = x + torch.randn(x.shape)
 
 for step in range(n_steps):
-    # for index, input_sig in enumerate(dataloader):
         with torch.no_grad():
             gamma = s_utils.get_noise(t=t, idx=step)
             t_hat = t[step] + t[step] * gamma
