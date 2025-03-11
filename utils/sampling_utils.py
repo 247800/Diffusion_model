@@ -16,5 +16,5 @@ def get_noise(t, S_tmin=1e-5, S_tmax=12, S_churn=None, idx=0):
         gamma_i = 0
     else:
         N = torch.randn(1)
-        gamma_i = min(S_churn / N, torch.sqrt(1) - 1)
+        gamma_i = min(S_churn / N, np.sqrt(1) - 1)
     return gamma_i
