@@ -55,7 +55,6 @@ for step in range(n_steps):
             d = (x_hat - D_theta) / t_hat
             x = x_hat + (t[step + 1] - t_hat) * d
             loss = loss_func(x_i, x).to(device)
-            # print("step:", step)
             print(f"Step: [{step+1}/{n_steps}], Loss: {loss}")
             wandb.log({"loss": loss})
             # test_loss.append(loss.item())
