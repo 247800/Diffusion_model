@@ -28,7 +28,6 @@ t = s_utils.get_time_schedule()
 
 model.eval()
 input_sig = next(iter(dataloader))
-# x, _ = input_sig
 x = input_sig
 x_0 = x + torch.randn(x.shape)
 
