@@ -3,12 +3,15 @@ import torchaudio
 import torch.optim as optim
 import numpy as np
 from torch import nn
+import torchvision.models as models
 from torch.utils.data import Dataset, DataLoader
 from dataset import AudioDataset
-from model import Denoiser
+# from model import Denoiser
+from CQT.unet_octCQT import Unet_octCQT
+import CQT.CQT_nsgt
 import utils.sampling_utils as s_utils
-import torchvision.models as models
-import auraloss
+from loss import l2_comp_stft_sum as loss_fn
+# import auraloss
 import wandb
 
 wandb.login()
@@ -19,13 +22,13 @@ print("using", device)
 path = "GTZAN_dataset"
 dataset = AudioDataset(path, train=False)
 dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
-model = Denoiser()
+# model = Denoiser()
+model = = Unet_octCQT()
 model.load_state_dict(torch.load('denoiser.pt', weights_only=True))
 
-loss_func = auraloss.freq.MultiResolutionSTFTLoss()
+# loss_func = auraloss.freq.MultiResolutionSTFTLoss()
 # test_loss = []
 n_steps = 50
-
 S_noise = 1
 t = s_utils.get_time_schedule()
 
@@ -53,8 +56,9 @@ for step in range(n_steps):
             x_hat = x + torch.sqrt(t_hat.clone().detach() ** 2 - t[step] ** 2) * noise
             D_theta = model(x_hat)
             d = (x_hat - D_theta) / t_hat
-            x = x_hat + (t[step + 1] - t_hat) * d
-            loss = loss_func(x_i, x).to(device)
+            x_i = x_hat + (t[step + 1] - t_hat) * d
+            loss = loss_fn(x=x.squeeze(1), x_hat=x_i.squeeze(1)).to(device)
+            
             print(f"Step: [{step+1}/{n_steps}], Loss: {loss}")
             wandb.log({"loss": loss})
             # test_loss.append(loss.item())
