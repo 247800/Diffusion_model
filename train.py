@@ -21,7 +21,7 @@ dataset = AudioDataset(path)
 dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
 # model = Denoiser()
 model = Unet_octCQT(
-	depth=8,
+    depth=8,
     emb_dim=256,
     Ns=[32,32, 64 ,64, 128, 128,256, 256],
     attention_layers=[0, 0, 0, 0, 0, 0, 0, 0],
@@ -32,21 +32,21 @@ model = Unet_octCQT(
         "window": "kaiser",
     	"beta": 1,
     	"num_octs": 8,
-		"bins_per_oct": 32,
+	"bins_per_oct": 32,
     },
     bottleneck_type="res_dil_convs",
     num_bottleneck_layers=1,
     attention_dict = {
-	    "num_heads": 8,
+	"num_heads": 8,
         "attn_dropout": 0.0,
     	"bias_qkv": False,
-		"N": 0,
+	"N": 0,
     	"rel_pos_num_buckets": 32,
     	"rel_pos_max_distance": 64,
-		"use_rel_pos": True,
-   		"Nproj": 8
-    })
-
+	"use_rel_pos": True,
+   	"Nproj": 8
+    }
+)
 
 # loss_func = nn.MSELoss()
 # loss_func = auraloss.freq.MultiResolutionSTFTLoss()
