@@ -36,21 +36,21 @@ model = Unet_octCQT(
         "window": "kaiser",
     	"beta": 1,
     	"num_octs": 8,
-		"bins_per_oct": 32,
+	"bins_per_oct": 32,
     },
     bottleneck_type="res_dil_convs",
     num_bottleneck_layers=1,
     attention_dict = {
-	    "num_heads": 8,
+	"num_heads": 8,
         "attn_dropout": 0.0,
     	"bias_qkv": False,
-		"N": 0,
+	"N": 0,
     	"rel_pos_num_buckets": 32,
     	"rel_pos_max_distance": 64,
-		"use_rel_pos": True,
-   		"Nproj": 8
-    })
-
+	"use_rel_pos": True,
+   	"Nproj": 8
+    }
+)
 
 # loss_func = auraloss.freq.MultiResolutionSTFTLoss()
 # test_loss = []
