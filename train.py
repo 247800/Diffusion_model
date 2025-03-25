@@ -80,11 +80,11 @@ for epoch in range(n_epochs):
         loss.backward()
         optimizer.step()
         # train_loss.append(loss.item())
+	wandb.log({"loss": loss})
 
         print(f"Epoch: [{epoch+1}/{n_epochs}], Step: {index+1}, Loss: {loss}")
         # print("Loss device:", loss.device)
         # print(f"End of epoch {epoch}, accuracy {acc}")
-        wandb.log({"loss": loss})
-
+        
 # torch.save(model.state_dict(), 'denoiser.pt')
 wandb.finish()
