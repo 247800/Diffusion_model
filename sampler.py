@@ -17,14 +17,12 @@ import wandb
 import hydra
 import os
 
-from omegaconf import DictConfig
-from omegaconf import ListConfig
 import torch.serialization
-from omegaconf.base import ContainerMetadata
+from omegaconf import ListConfig, DictConfig
+from omegaconf.base import ContainerMetadata, Metadata
 from typing import Any
 from collections import defaultdict
 from omegaconf.nodes import AnyNode
-from omegaconf.base import Metadata
 
 torch.serialization.add_safe_globals([
     ListConfig,
