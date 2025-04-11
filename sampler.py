@@ -26,16 +26,18 @@ from collections import defaultdict
 from omegaconf.nodes import AnyNode
 from omegaconf.base import Metadata
 
-torch.serialization.add_safe_globals([ListConfig])
-torch.serialization.add_safe_globals([ContainerMetadata])
-torch.serialization.add_safe_globals([Any])
-torch.serialization.add_safe_globals([list])
-torch.serialization.add_safe_globals([defaultdict])
-torch.serialization.add_safe_globals([dict])
-torch.serialization.add_safe_globals([int])
-torch.serialization.add_safe_globals([AnyNode])
-torch.serialization.add_safe_globals([Metadata])
-torch.serialization.add_safe_globals([DictConfig])
+torch.serialization.add_safe_globals([
+    ListConfig,
+    ContainerMetadata,
+    Any,
+    list,
+    defaultdict,
+    dict,
+    int,
+    AnyNode,
+    Metadata,
+    DictConfig
+])
 
 os.environ['HYDRA_FULL_ERROR'] = '1'
 
