@@ -47,7 +47,8 @@ print("using", device)
 hydra.initialize(config_path="config", version_base="1.4")  # Set correct path
 cfg = hydra.compose(config_name="cqtdiff+_44k_32binsoct")  # Use correct config name
 model = hydra.utils.instantiate(cfg)
-model.load_state_dict(torch.load("checkpoints/guitar_Career_44k_6s-325000.pt", weights_only=True))
+weights = torch.load("checkpoints/guitar_Career_44k_6s-325000.pt", weights_only=True)
+model.load_state_dict(weights, strict=False)
 
 path = "GTZAN_dataset"
 dataset = AudioDataset(path, train=False, seg_len=262144)
