@@ -4,7 +4,7 @@ import torch.optim as optim
 from torch import nn
 from dataset import AudioDataset
 from torch.utils.data import Dataset, DataLoader
-# from model import Denoiser
+from model import Denoiser
 from CQT.unet_octCQT import Unet_octCQT
 import CQT.CQT_nsgt
 # import auraloss
@@ -19,34 +19,34 @@ print("using", device)
 path = "GTZAN_dataset"
 dataset = AudioDataset(path)
 dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
-# model = Denoiser()
-model = Unet_octCQT(
-    depth=8,
-    emb_dim=256,
-    Ns=[32,32, 64 ,64, 128, 128,256, 256],
-    attention_layers=[0, 0, 0, 0, 0, 0, 0, 0],
-    checkpointing=[True, True, True, True, True, True, True, True],
-    Ss=[2,2,2,2, 2, 2, 2, 2],
-    num_dils=[1,3,4,5,5,6,6,7],
-    cqt = {
-        "window": "kaiser",
-    	"beta": 1,
-    	"num_octs": 8,
-	"bins_per_oct": 32,
-    },
-    bottleneck_type="res_dil_convs",
-    num_bottleneck_layers=1,
-    attention_dict = {
-	"num_heads": 8,
-        "attn_dropout": 0.0,
-    	"bias_qkv": False,
-	"N": 0,
-    	"rel_pos_num_buckets": 32,
-    	"rel_pos_max_distance": 64,
-	"use_rel_pos": True,
-   	"Nproj": 8
-    }
-)
+model = Denoiser()
+# model = Unet_octCQT(
+#     depth=8,
+#     emb_dim=256,
+#     Ns=[32,32, 64 ,64, 128, 128,256, 256],
+#     attention_layers=[0, 0, 0, 0, 0, 0, 0, 0],
+#     checkpointing=[True, True, True, True, True, True, True, True],
+#     Ss=[2,2,2,2, 2, 2, 2, 2],
+#     num_dils=[1,3,4,5,5,6,6,7],
+#     cqt = {
+#         "window": "kaiser",
+#     	"beta": 1,
+#     	"num_octs": 8,
+# 	"bins_per_oct": 32,
+#     },
+#     bottleneck_type="res_dil_convs",
+#     num_bottleneck_layers=1,
+#     attention_dict = {
+# 	"num_heads": 8,
+#         "attn_dropout": 0.0,
+#     	"bias_qkv": False,
+# 	"N": 0,
+#     	"rel_pos_num_buckets": 32,
+#     	"rel_pos_max_distance": 64,
+# 	"use_rel_pos": True,
+#    	"Nproj": 8
+#     }
+# )
 
 # loss_func = nn.MSELoss()
 # loss_func = auraloss.freq.MultiResolutionSTFTLoss()
