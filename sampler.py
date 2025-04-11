@@ -83,7 +83,6 @@ dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
 # )
 
 # loss_func = auraloss.freq.MultiResolutionSTFTLoss()
-# test_loss = []
 n_steps = 50
 S_noise = 1
 t = s_utils.get_time_schedule()
