@@ -52,7 +52,7 @@ model = Denoiser()
 # loss_func = auraloss.freq.MultiResolutionSTFTLoss()
 
 learning_rate = 0.001
-optimizer = optim.Adam(model_train.parameters(), lr=learning_rate)
+optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 n_epochs = 50
 epoch = 0
 # train_loss = []
@@ -74,7 +74,7 @@ for epoch in range(n_epochs):
         corrupted_sig = waveform + noise * torch.randn(waveform.shape)
 
         optimizer.zero_grad()
-        output = model_train(corrupted_sig)
+        output = model(corrupted_sig)
         # loss = loss_func(output, waveform).to(device)
         loss = loss_fn(x=waveform.squeeze(1), x_hat=output.squeeze(1)).to(device)
         loss.backward()
